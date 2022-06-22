@@ -4,6 +4,7 @@ input.onButtonPressed(Button.A, function () {
 input.onButtonPressed(Button.B, function () {
     player.move(1)
 })
+let speed = 0
 let enemy3: game.LedSprite = null
 let enemy2: game.LedSprite = null
 let enemy1: game.LedSprite = null
@@ -31,13 +32,30 @@ basic.forever(function () {
         enemy1.change(LedSpriteProperty.Y, 1)
         enemy2.change(LedSpriteProperty.Y, 1)
         enemy3.change(LedSpriteProperty.Y, 1)
-        basic.pause(500)
+        basic.pause(speed)
     }
     if (enemy1.isTouching(player) || (enemy2.isTouching(player) || enemy3.isTouching(player))) {
         game.gameOver()
     } else {
+        game.addScore(1)
         enemy1.delete()
         enemy2.delete()
         enemy3.delete()
+    }
+})
+basic.forever(function () {
+    speed = 500
+    if (game.score() >= 0 && game.score() <= 5) {
+        speed = 450
+    } else if (game.score() <= 10) {
+        speed = 400
+    } else if (game.score() <= 15) {
+        speed = 350
+    } else if (game.score() <= 20) {
+        speed = 300
+    } else if (game.score() <= 25) {
+        speed = 250
+    } else {
+        speed = 200
     }
 })
